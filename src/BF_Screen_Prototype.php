@@ -19,6 +19,12 @@ if( ! class_exists( 'BF_Screen_Prototype' ) ):
  */
 abstract class BF_Screen_Prototype {
     /**
+     * @var string $_slug
+     * @since 1.0.1
+     */
+    protected $_slug;
+
+    /**
      * @var string $slug
      * @since 1.0.0
      */
@@ -360,7 +366,7 @@ abstract class BF_Screen_Prototype {
         extract( is_array( $args ) ? $args : [] );
 
         ob_start();
-        include( BF_PATH . 'partials/screen-' . str_replace( BF_SLUG . '-', '', $this->slug ) . '.phtml' );
+        include( BF_PATH . 'partials/screen-' . $this->_slug . '.phtml' );
         $output = ob_get_clean();
 
         /**

@@ -1,0 +1,23 @@
+<?php
+/**
+ * @author Ondřej Doněk <ondrejd@gmail.com>
+ * @link https://github.com/ondrejd/odwp-betting_fields for the canonical source repository
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-betting_fields
+ * @see BF_Plugin::admin_menu()
+ * @since 1.0.0
+ */
+
+if( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+?>
+<form action="options.php" method="post">
+    <h2><?php _e( 'Nastavení pluginu <i>Napojení na XML feedy sázkových kanceláří</i>', BF_SLUG ) ?></h2>
+<?php
+        settings_fields( BF_SLUG );
+        do_settings_sections( BF_SLUG );
+        submit_button();
+?>
+</form>

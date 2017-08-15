@@ -72,7 +72,7 @@ class BF_Plugin {
      */
     public static function get_default_options() {
         return [
-            //...
+            'setting_field_1' => 'test',
         ];
     }
 
@@ -132,7 +132,6 @@ class BF_Plugin {
         add_action( 'init', [__CLASS__, 'init'] );
         add_action( 'admin_init', [__CLASS__, 'admin_init'] );
         add_action( 'admin_menu', [__CLASS__, 'admin_menu'] );
-        add_action( 'admin_bar_menu', [__CLASS__, 'admin_menu_bar'], 100 );
         add_action( 'plugins_loaded', [__CLASS__, 'plugins_loaded'] );
         add_action( 'wp_enqueue_scripts', [__CLASS__, 'enqueue_scripts'] );
         add_action( 'admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'] );
@@ -194,12 +193,6 @@ class BF_Plugin {
          */
         $options_screen = new BF_Options_Screen();
         self::$admin_screens[$options_screen->get_slug()] = $options_screen;
-
-        /**
-         * @var BF_Log_Screen $log_screen
-         */
-        $log_screen = new BF_Log_Screen();
-        self::$admin_screens[$log_screen->get_slug()] = $log_screen;
     }
 
     /**
@@ -218,10 +211,6 @@ class BF_Plugin {
 
         // Initialize admin screens
         self::screens_call_method( 'admin_init' );
-
-        // Initialize dashboard widgets
-        include( BF_PATH . 'src/BF_Log_Dashboard_Widget.php' );
-        add_action( 'wp_dashboard_setup', ['BF_Log_Dashboard_Widget', 'init'] );
     }
 
     /**
@@ -235,55 +224,6 @@ class BF_Plugin {
     }
 
     /**
-     * Hook for "admin_menu_bar" action.
-     * @link https://codex.wordpress.org/Class_Reference/WP_Admin_Bar/add_menu
-     * @param \WP_Admin_Bar $bar
-     * @return void
-     * @since 1.0.0
-     */
-    public static function admin_menu_bar( \WP_Admin_Bar $bar ) {
-        // Get options
-        $options = self::get_options();
-
-        // Prepare arguments for new admin bar node
-        $args  = [
-            'id'     => 'odwpbf-adminbar_item',
-            'href'   => admin_url( 'tools.php?page=' . BF_SLUG . '-log' ),
-            'parent' => 'top-secondary',
-            'meta'   => [],
-        ];
-
-        // Get log records count
-        $count_prev = self::get_option( 'prev_log_count', 0 );
-        $count_current = self::get_log_count();
-
-        $args['meta']['title'] = __( 'Zobrazit ladící zprávy', BF_LOG );
-        $icon = sprintf(
-            '<img src="%s" alt="%s">',
-            plugins_url( '/images/icon-24.png', BF_FILE ),
-                __( 'DL', BF_SLUG )
-        );
-
-        if( $count_current <= $count_prev ) {
-            $display = '<span class="odwpdl-ab-log">' . $icon . '</span>';
-        } else {
-            $display = sprintf(
-                '<span class="odwpdl-ab-log odwpdl-ab-log-active">%s</span> ' .
-                '<span class="odwpdl-ab-bubble">%d</span>',
-                $icon,
-                abs( $count_current - $count_prev )
-            );
-        }
-
-        $args['title'] = $display;
-
-        // Add our admin bar item
-        $bar->add_node( $args );
-
-        // Note: Current log count is saved in file `partials/screen-log.phtml`.
-    }
-
-    /**
      * Hook for "admin_enqueue_scripts" action.
      * @param string $hook
      * @return void
@@ -291,7 +231,7 @@ class BF_Plugin {
      */
     public static function admin_enqueue_scripts( $hook ) {
         wp_enqueue_script( BF_SLUG, plugins_url( 'js/admin.js', BF_FILE ), ['jquery'] );
-        wp_localize_script( BF_SLUG, 'odwpdl', [
+        wp_localize_script( BF_SLUG, 'odwpbf', [
             //...
         ] );
         wp_enqueue_style( BF_SLUG, plugins_url( 'css/admin.css', BF_FILE ) );

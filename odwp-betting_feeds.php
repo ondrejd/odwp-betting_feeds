@@ -30,7 +30,7 @@
  * for both, required extensions for PHP and requireds plugins for WP.
  *
  * If you are using copy of original file in your plugin you shoud change
- * prefix "odwpdl" and name "odwp-betting_feeds" to your own values.
+ * prefix "odwpbf" and name "odwp-betting_feeds" to your own values.
  *
  * To set the requirements go down to line 133 and define array that
  * is used as a parameter for `odwpbf_check_requirements` function.
@@ -41,7 +41,7 @@ if( ! defined( 'ABSPATH' ) ) {
 }
 
 // Some widely used constants
-defined( 'BF_SLUG' ) || define( 'BF_SLUG', 'odwpdl' );
+defined( 'BF_SLUG' ) || define( 'BF_SLUG', 'odwpbf' );
 defined( 'BF_NAME' ) || define( 'BF_NAME', 'odwp-betting_feeds' );
 defined( 'BF_PATH' ) || define( 'BF_PATH', dirname( __FILE__ ) . '/' );
 defined( 'BF_FILE' ) || define( 'BF_FILE', __FILE__ );
