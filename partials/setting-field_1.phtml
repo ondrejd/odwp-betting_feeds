@@ -1,0 +1,22 @@
+<?php
+/**
+ * @author Ondřej Doněk <ondrejd@gmail.com>
+ * @link https://github.com/ondrejd/odwp-betting_feeds for the canonical source repository
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-betting_fields
+ * @see BF_Plugin::render_settings_field_1()
+ * @since 1.0.0
+ */
+
+if( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+$fid   = BF_SLUG . '_setting_field_1';
+$fname = BF_SLUG . '_settings[setting_field_1]';
+$fval  = BF_Plugin::get_option( 'setting_field_1' );
+
+?><div class="form-row">
+    <label for="<?php echo $fid ?>"></label>
+    <input id="<?php echo $fid ?>" name="<?php echo $fname ?>" value="<?php echo $fval ?>">
+</div>
