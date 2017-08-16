@@ -130,11 +130,12 @@ class BF_Plugin {
         register_uninstall_hook( BF_FILE, [__CLASS__, 'uninstall'] );
 
         add_action( 'init', [__CLASS__, 'init'] );
-        add_action( 'admin_init', [__CLASS__, 'admin_init'] );
+        add_action( 'admin_init', [__CLASS__, 'init_admin'] );
         add_action( 'admin_menu', [__CLASS__, 'admin_menu'] );
         add_action( 'plugins_loaded', [__CLASS__, 'plugins_loaded'] );
         add_action( 'wp_enqueue_scripts', [__CLASS__, 'enqueue_scripts'] );
         add_action( 'admin_enqueue_scripts', [__CLASS__, 'admin_enqueue_scripts'] );
+        add_action( 'widgets_init', [__CLASS__, 'init_widgets'] );
     }
 
     /**
@@ -180,6 +181,24 @@ class BF_Plugin {
     }
 
     /**
+     * Hook for "admin_init" action.
+     * @return void
+     * @since 1.0.0
+     */
+    public static function init_admin() {
+        register_setting( BF_SLUG, self::SETTINGS_KEY );
+
+        // Check environment
+        self::check_environment();
+
+        // Initialize Settings API
+        self::init_settings();
+
+        // Initialize admin screens
+        self::screens_call_method( 'admin_init' );
+    }
+
+    /**
      * Initialize admin screens.
      * @return void
      * @since 1.0.0
@@ -193,24 +212,23 @@ class BF_Plugin {
          */
         $options_screen = new BF_Options_Screen();
         self::$admin_screens[$options_screen->get_slug()] = $options_screen;
+
+        // Add help tabs
+        add_action( 'load-post.php', [__CLASS__, 'add_shortcode_help_tab'], 20 );
+        add_action( 'load-post-new.php', [__CLASS__, 'add_shortcode_help_tab'], 20 );
+        add_action( 'load-edit.php', [__CLASS__, 'add_shortcode_help_tab'], 20 );
+        add_action( 'load-widgets.php', [__CLASS__, 'add_widget_help_tab'], 20 );
     }
 
     /**
-     * Hook for "admin_init" action.
+     * Hook for "widgets_init" action.
      * @return void
      * @since 1.0.0
      */
-    public static function admin_init() {
-        register_setting( BF_SLUG, self::SETTINGS_KEY );
+    public static function init_widgets() {
+        include( BF_PATH . 'src/BF_PMTable_Widget.php' );
 
-        // Check environment
-        self::check_environment();
-
-        // Initialize Settings API
-        self::init_settings();
-
-        // Initialize admin screens
-        self::screens_call_method( 'admin_init' );
+        register_widget( 'BF_PMTable_Widget' );
     }
 
     /**
@@ -243,35 +261,7 @@ class BF_Plugin {
      * @since 1.0.0
      */
     public static function check_environment() {
-        if( ! file_exists( BF_LOG ) || ! is_writable( BF_LOG ) ) {
-            add_action( 'admin_notices', function() {
-                $msg = sprintf(
-                        __( '<strong>Debug Log Viewer</strong>: Soubor (<code>%s</code>) k zápisu ladících informací není vytvořen nebo není zapisovatelný. Pro více informací přejděte na <a href="%s">nastavení tohoto pluginu</a>.', BF_SLUG ),
-                        BF_LOG,
-                        admin_url( 'options-general.php?page=' . BF_SLUG . '-plugin_options' )
-                );
-                BF_Plugin::print_admin_notice( $msg );
-            } );
-        }
-
-        /**
-         * @var string $err_msg Error message about setting WP_DEBUG and WP_DEBUG_LOG constants.
-         */
-        $err_msg = sprintf(
-                __( 'Pro umožnění zápisu ladících informací do logovacího souboru (<code>%s</code>) musí být konstanty <code>%s</code> a <code>%s</code> nastaveny na hodnotu <code>TRUE</code>. Pro více informací přejděte na <a href="%s">nastavení tohoto pluginu</a>.', BF_SLUG ),
-                BF_LOG,
-                'WP_DEBUG',
-                'WP_DEBUG_LOG',
-                admin_url( 'options-general.php?page=' . BF_SLUG . '-plugin_options' )
-        );
-
-        if( ! defined( 'WP_DEBUG' ) || ! defined( 'WP_DEBUG_LOG' ) ) {
-            self::print_admin_notice( $err_msg, 'error' );
-        }
-
-        if( ! defined( 'WP_DEBUG' ) || ! defined( 'WP_DEBUG_LOG' ) ) {
-            self::print_admin_notice( $err_msg, 'error' );
-        }
+        //...
     }
 
     /**
@@ -289,11 +279,11 @@ class BF_Plugin {
      * @since 1.0.0
      */
     public static function enqueue_scripts() {
-        //wp_enqueue_script( BF_SLUG, plugins_url( 'js/public.js', BF_FILE ), ['jquery'] );
-        //wp_localize_script( BF_SLUG, 'odwpng', [
-        //    //...
-        //] );
-        //wp_enqueue_style( BF_SLUG, plugins_url( 'css/public.css', BF_FILE ) );
+        wp_enqueue_script( BF_SLUG, plugins_url( 'js/public.js', BF_FILE ), ['jquery'] );
+        wp_localize_script( BF_SLUG, 'odwpbf', [
+            //...
+        ] );
+        wp_enqueue_style( BF_SLUG, plugins_url( 'css/public.css', BF_FILE ) );
     }
 
     /**
@@ -329,17 +319,6 @@ class BF_Plugin {
         }
 
         // Nothing to do...
-    }
-
-    /**
-     * Updates user option `prev_log_count`.
-     * @return void
-     * @since 1.0.0
-     */
-    public static function updates_prev_log_count() {
-        $options = self::get_options();
-        $options['prev_log_count'] = self::get_log_count();
-        update_option( self::SETTINGS_KEY, $options );
     }
 
     /**
@@ -386,6 +365,54 @@ class BF_Plugin {
                 call_user_func( [ $screen, $method ] );
             }
         }
+    }
+
+    /**
+     * Hook for "load-[post|post-new|edit].php" actions.
+     * @return void
+     * @since 1.0.0
+     */
+    public static function add_shortcode_help_tab() {
+        /** @var \WP_Screen $screen */
+        $screen = get_current_screen();
+
+        if( ! in_array( $screen->id, ['post', /*'edit-post',*/ 'page'] ) ) {
+            return;
+        }
+
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/help-shortcode_help.phtml' );
+        $help_tab = ob_get_flush();
+
+        $screen->add_help_tab( [
+            'id'       => BF_SLUG . '-help',
+            'title'    => __( 'Sportovní feedy', BF_SLUG ),
+            'content'  => $help_tab,
+		] );
+    }
+
+    /**
+     * Hook for "load-widgets.php" action.
+     * @return void
+     * @since 1.0.0
+     */
+    public static function add_widget_help_tab() {
+        /** @var \WP_Screen $screen */
+        $screen = get_current_screen();
+
+        if( ! strstr( $screen->id, 'widgets' ) ) {
+            return;
+        }
+
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/help-widget_help.phtml' );
+        $help_tab = ob_get_flush();
+
+        $screen->add_help_tab( [
+            'id'       => BF_SLUG . '-widget_help',
+            'title'    => __( 'Sportovní feedy', BF_SLUG ),
+            'content'  => $help_tab,
+		] );
     }
 }
 
