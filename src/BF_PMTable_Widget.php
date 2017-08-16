@@ -17,6 +17,7 @@ if( ! class_exists( 'BF_PMTable_Widget' ) ) :
 
 /**
  * Widget, který zobrazuje výsledkovou tabulku Premier League ({@link https://premierleague.cz/tabulka/}).
+ * @link https://developer.wordpress.org/reference/classes/wp_widget/
  * @since 1.0.0
  */
 class BF_PMTable_Widget extends WP_Widget {
@@ -46,8 +47,9 @@ class BF_PMTable_Widget extends WP_Widget {
      * @since 1.0.0
      */
     public function widget( $args, $instance ) {
-        echo '<p class="odwpbf-widget">' . __( '<code>XXX</code> Dokončit widget!', BF_SLUG ) . '</p>';
-        //...
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/widget-pmtable.phtml' );
+        echo ob_get_flush();
     }
  
     /**
@@ -69,22 +71,11 @@ class BF_PMTable_Widget extends WP_Widget {
      * @since 1.0.0
      */
     public function form( $instance ) {
-        echo '<p class="no-options-widget">' . __( 'Žádné volby pro tento widget.', BF_SLUG ) . '</p>';
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/widget_form-pmtable.phtml' );
+        echo ob_get_flush();
         return 'noform';
     }
 }
 
 endif;
-
-
-
-
-
-
-
-
-
-
-
-
-
