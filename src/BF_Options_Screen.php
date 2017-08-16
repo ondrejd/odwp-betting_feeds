@@ -17,7 +17,7 @@ if( ! class_exists( 'BF_Options_Screen' ) ):
  * Administration screen for plugin's options.
  * @since 1.0.0
  */
-class BF_Options_Screen extends DL_Screen_Prototype {
+class BF_Options_Screen extends BF_Screen_Prototype {
     /**
      * Constructor.
      * @param WP_Screen $screen Optional.
