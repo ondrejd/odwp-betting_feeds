@@ -227,8 +227,10 @@ class BF_Plugin {
      */
     public static function init_widgets() {
         include( BF_PATH . 'src/BF_PMTable_Widget.php' );
+        include( BF_PATH . 'src/BF_PMCurrentRound_Widget.php' );
 
         register_widget( 'BF_PMTable_Widget' );
+        register_widget( 'BF_PMCurrentRound_Widget' );
     }
 
     /**
