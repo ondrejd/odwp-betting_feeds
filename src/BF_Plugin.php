@@ -37,16 +37,28 @@ class BF_Plugin {
     const TABLE_NAME = BF_SLUG;
 
     /**
-     * @var array $admin_screens Array with admin screens.
      * @since 1.0.0
+     * @var array $admin_screens Array with admin screens.
      */
     public static $admin_screens = [];
 
     /**
-     * @var string
      * @since 1.0.0
+     * @var string $options_page_hook
      */
     public static $options_page_hook;
+
+    /**
+     * @since 1.0.0
+     * @var string $upload_dir
+     */
+    private static $upload_dir;
+
+    /**
+     * @since 1.0.0
+     * @var string $cache_dir
+     */
+    private static $cache_dir;
 
     /**
      * @internal Activates the plugin.
@@ -64,6 +76,25 @@ class BF_Plugin {
      */
     public static function deactivate() {
         //...
+    }
+
+    /**
+     * @param string $path (Optional.) Path to append.
+     * @return string Path to plugin's cache/upload directory.
+     * @since 1.0.0
+     */
+    public static function get_cache_dir( $path = null ) {
+        if( ! is_array( self::$upload_dir ) ) {
+            self::$upload_dir = wp_upload_dir();
+        }
+
+        self::$cache_dir = self::$upload_dir['basedir'] . '/' . BF_SLUG;
+
+        if( empty( $path ) ) {
+            return self::$cache_dir;
+        }
+
+        return self::$cache_dir . '/' . ltrim( $path, '/' );
     }
 
     /**
@@ -263,7 +294,35 @@ class BF_Plugin {
      * @since 1.0.0
      */
     public static function check_environment() {
-        //...
+        // We need to check if cache/uploads directory is available and writable.
+        $cache_dir = self::get_cache_dir();
+
+        // check/create wp-content/uploads/odwpbf
+        if( ! file_exists( $cache_dir ) ) {
+            if( ! mkdir( $cache_dir, 0777, true) ) {
+                add_action( 'admin_notices', function() use ( $cache_dir ) {
+                    BF_Plugin::print_admin_notice( sprintf(
+                        __( 'Plugin <strong>Napojení na XML feedy sázkových kanceláří</strong>: Nelze vytvořit odkládací adresář (<code>%s</code>).', BF_SLUG ),
+                        $cache_dir
+                    ) );
+                } );
+                return;
+            }
+        }
+
+        // File `pmtable.json` is used in BF_PMTable_Widget
+        include_once( BF_PATH . 'src/BF_PMTable_DataSource.php' );
+        $pmtable_json = self::get_cache_dir( 'pmtable.json' );
+
+        // check/create wp-content/uploads/odwpbf/pmtable.json
+        if( ! BF_PMTable_DataSource::create_default_data() ) {
+            add_action( 'admin_notices', function() use ( $pmtable_json ) {
+                BF_Plugin::print_admin_notice( sprintf(
+                    __( 'Plugin <strong>Napojení na XML feedy sázkových kanceláří</strong>: Nelze vytvořit odkládací soubor (<code>%s</code>) pro widge s výsledkovou tabulkou.', BF_SLUG ),
+                    $pmtable_json
+                ) );
+            } );
+        }
     }
 
     /**

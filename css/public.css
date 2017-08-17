@@ -5,4 +5,72 @@
  * @package odwp-betting_feeds
  */
 
-/* ... */
+.odwpbf-pmtable-widget {
+    clear: both;
+    border: 3px solid #A52A2A;
+    padding: 0 0 0 0;
+    padding: 0 0 2em 0;
+    margin: 0 0 0 0;
+    width: 300px;
+}
+.odwpbf-pmtable-widget h2 {
+    font-size: 1.14em;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.3em;
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--row {
+    background-color: #fff;
+    clear: both;
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--head {
+    background-color: #f2f2f2;
+    font-size: 0.92em;
+}
+
+.odwpbf-pmtable-widget .odwpbf-pmtable--col {
+    border-bottom: 1px dotted #ccc;
+    display: inline-box;
+    float: left;
+    font-size: 0.98em;
+    letter-spacing: -0.08em;
+    line-height: 1.26em;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    text-align: center;
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--col1,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col3,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col4,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col5,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col6,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col7,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col8,
+.odwpbf-pmtable-widget .odwpbf-pmtable--col9 {
+    width: 6%;
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--col1 {
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--col2 {
+    text-align: left;
+    width: 50%;
+}
+.odwpbf-pmtable-widget .odwpbf-pmtable--col7 { width: 7%; }
+.odwpbf-pmtable-widget .odwpbf-pmtable--col8 { width: 7%; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

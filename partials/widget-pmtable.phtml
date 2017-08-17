@@ -12,5 +12,105 @@ if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+echo $args['before_widget'];
 ?>
-<p class="odwpbf-pmtable-widget"><?php _e( '<code>XXX</code> Dokončit widget <code>BF_PMTable_Widget</code>!', BF_SLUG ) ?></p>
+<div class="odwpbf-pmtable-widget">
+    <?php if( ! empty( $instance['title'] ) ) : 
+        echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+    endif; ?>
+    <div class="odwpbf-pmtable">
+        <div class="odwpbf-pmtable--row odwpbf-pmtable--head">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">P</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Tým</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">Z</span>
+            <!-- celkem [ -->
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">V</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">R</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">P</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">G+</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">G-</span>
+            <!-- ] -->
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">B</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Manchester United FC</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">4</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">2</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Huddersfield Town </span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">3</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">3</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Tottenham Hotspur FC</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">2</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">4</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Manchester City FC </span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">2</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">5</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Arsenal FC</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">4</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">3</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">6</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Burnley FC</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">3</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">2</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+        <div class="odwpbf-pmtable--row">
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">7</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Everton FC</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">1</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">0</span>
+            <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">3</span>
+        </div>
+    </div>
+</div>
+<?php
+echo $args['after_widget'];
+?>

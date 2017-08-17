@@ -33,9 +33,19 @@ class BF_PMTable_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             BF_SLUG . '-pmtable_widget',
-            __( 'Výsledková tabulka PM', BF_SLUG ),
-            [],
-            []
+            __( 'Výsledková tabulka PM', BF_SLUG ), [
+                'description' => __( 'Premier League 2017/18', BF_SLUG ),
+                'league'      => 'pm2018',
+                'show_col1'   => true,
+                'show_col2'   => true,
+                'show_col3'   => true,
+                'show_col4'   => true,
+                'show_col5'   => true,
+                'show_col6'   => true,
+                'show_col7'   => true,
+                'show_col8'   => true,
+                'show_col9'   => true,
+            ], []
         );
     }
 
@@ -51,6 +61,33 @@ class BF_PMTable_Widget extends WP_Widget {
         include( BF_PATH . 'partials/widget-pmtable.phtml' );
         echo ob_get_flush();
     }
+
+    /**
+     * Outputs the settings update form.
+     * @param array $instance Current settings.
+     * @return string Default return is 'noform'.
+     * @since 1.0.0
+     */
+    public function form( $instance ) {
+        // Normalize instance data
+        $description = ! empty( $instance['description'] ) ? $instance['description'] : __( 'Premier League 2017/2018', BF_SLUG );
+        $league      = ! empty( $instance['league'] ) ? $instance['league'] : 'pm2018';
+        $show_col1   = ! empty( $instance['show_col1'] ) ? (bool) $instance['show_col1'] : true;
+        $show_col2   = true;
+        $show_col3   = ! empty( $instance['show_col3'] ) ? (bool) $instance['show_col3'] : true;
+        $show_col4   = ! empty( $instance['show_col4'] ) ? (bool) $instance['show_col4'] : true;
+        $show_col5   = ! empty( $instance['show_col5'] ) ? (bool) $instance['show_col5'] : true;
+        $show_col6   = ! empty( $instance['show_col6'] ) ? (bool) $instance['show_col6'] : true;
+        $show_col7   = ! empty( $instance['show_col7'] ) ? (bool) $instance['show_col7'] : true;
+        $show_col8   = ! empty( $instance['show_col8'] ) ? (bool) $instance['show_col8'] : true;
+        $show_col9   = ! empty( $instance['show_col9'] ) ? (bool) $instance['show_col9'] : true;
+        $self        = $this;
+
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/widget_form-pmtable.phtml' );
+        echo ob_get_flush();
+        //return 'noform';
+    }
  
     /**
      * Updates a particular instance of a widget.
@@ -61,21 +98,24 @@ class BF_PMTable_Widget extends WP_Widget {
      * @since 1.0.0
      */
     public function update( $new_instance, $old_instance ) {
+/*
+        $instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
+*/
         return $new_instance;
-    }
- 
-    /**
-     * Outputs the settings update form.
-     * @param array $instance Current settings.
-     * @return string Default return is 'noform'.
-     * @since 1.0.0
-     */
-    public function form( $instance ) {
-        ob_start( function() {} );
-        include( BF_PATH . 'partials/widget_form-pmtable.phtml' );
-        echo ob_get_flush();
-        return 'noform';
     }
 }
 
 endif;
+
+
+
+
+
+
+
+
+
+
