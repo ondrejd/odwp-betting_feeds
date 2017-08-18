@@ -11,6 +11,10 @@ if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if( ! class_exists( 'BF_PMTable_DataItem' ) ) :
+    include_once( BF_PATH . 'src/BF_PMTable_DataItem.php' );
+endif;
+
 
 if( ! class_exists( 'BF_PMTable_DataSource' ) ) :
 
@@ -29,29 +33,75 @@ class BF_PMTable_DataSource {
      * @since 1.0.0
      * @var array $data
      */
-    protected static $data;
+    protected static $data = null;
 
     /**
-     * Parsuje data ze stránky {@link https://premierleague.cz/tabulka/} do JSONu, který se pak používá při zobrazení {@see BF_PMTable_Widget}. Volá se přes WP_Cron.
+     * Parsuje data ze stránky {@link https://premierleague.cz/tabulka/}
+     * do JSONu, který se pak používá při zobrazení {@see BF_PMTable_Widget}.
+     * Volá se přes WP_Cron.
      * @return void
      * @since 1.0.0
      */
     public static function cron_job() {
         // Získáme HTML dokument
         $html = file_get_contents( self::DATA_URL );
+
         // Vytvoříme z něho DOM objekt
         $dom = new \DOMDocument();
         $dom->loadHTML( $html );
-        // Najdeme tabulku s výsledky
-        //...
-        // Převedeme z ní data do objektu/pole pro JSON
-        //...
-        // Uložíme pmtable.json
-        //...
 
-echo '<pre>';
-var_dump( $dom );
-exit();
+        // Najdeme tabulku s výsledky
+        $cont = $dom->getElementById( 'no-more-tables' );
+        if( ! ( $cont instanceof \DOMElement ) ) {
+            return;
+        }
+
+        $tables = $cont->getElementsByTagName( 'table' );
+        $table = null;
+
+        if( $tables->length > 0 ) {
+            $table = $tables->item( 0 );
+        }
+
+        if( ! ( $table instanceof \DOMElement ) ) {
+            return;
+        }
+
+        // Převedeme z ní data do objektu/pole pro JSON
+        $tbodies = $table->getElementsByTagName( 'tbody' );
+
+        if( $tbodies->length <= 0 ) {
+            return;
+        }
+
+        $rows = $tbodies->item( 0 )->getElementsByTagName( 'tr' );
+        $data = '';
+
+        for( $i = 0; $i < $rows->length; $i++ ) {
+            $row = $rows->item( $i );
+            $tds = $row->getElementsByTagName( 'td' );
+            $itm = new BF_PMTable_DataItem();
+
+            for( $y = 0; $y < $tds->length; $y++ ) {
+                switch( $y ) {
+                    case 0: $itm->poradi = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 1: $itm->tym    = trim( $tds->item( $y )->textContent ); break;
+                    case 2: $itm->zapasy = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 3: $itm->vyhry  = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 4: $itm->remizy = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 5: $itm->prohry = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 6: $itm->goly_v = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 7: $itm->goly_o = ( int ) trim( $tds->item( $y )->textContent ); break;
+                    case 8: $itm->body   = ( int ) trim( $tds->item( $y )->textContent ); break;
+                }
+
+                $data[] = $itm;
+            }
+        }
+
+        // Uložíme pmtable.json
+        $json = json_encode( $data );
+        file_put_contents( BF_Plugin::get_cache_dir( 'pmtable.json' ), $json );
     }
 
     /**
