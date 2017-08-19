@@ -7,7 +7,7 @@ Jednoduchý plugin pro [WordPress][1], který zobrazuje XML feedy ze sázkových
 - [ ] stránka s nastavením pluginu
 - [ ] editovat/přidat příspěvek/stránku - doplnit panel s nápovědou ohledně nových [shortcode][2]
 - [ ] přidat nový widget s přehledem zvolených live zápasů
-- [ ] přidat nový widget s [výsledkovou tabulkou][5]
+- [x] ~~přidat nový widget s [výsledkovou tabulkou][5]~~
 - [ ] přidat nový widget s [posledními zápasy][4]
 - [ ] doplnit panel s nápovědou na stránku s editací widgetů
 
