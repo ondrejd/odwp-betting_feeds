@@ -21,8 +21,8 @@ class BF_PMTable_DataItem {
     public $vyhry;
     public $remizy;
     public $prohry;
-    public $goly_obdrzene;
-    public $goly_vstrelene;
+    public $goly_o;
+    public $goly_v;
     public $body;
 }
 

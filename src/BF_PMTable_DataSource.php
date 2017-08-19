@@ -11,9 +11,9 @@ if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if( ! class_exists( 'BF_PMTable_DataItem' ) ) :
+if( ! class_exists( 'BF_PMTable_DataItem' ) ) {
     include_once( BF_PATH . 'src/BF_PMTable_DataItem.php' );
-endif;
+}
 
 
 if( ! class_exists( 'BF_PMTable_DataSource' ) ) :
@@ -94,9 +94,9 @@ class BF_PMTable_DataSource {
                     case 7: $itm->goly_o = ( int ) trim( $tds->item( $y )->textContent ); break;
                     case 8: $itm->body   = ( int ) trim( $tds->item( $y )->textContent ); break;
                 }
-
-                $data[] = $itm;
             }
+
+            $data[] = $itm;
         }
 
         // Uložíme pmtable.json
@@ -112,6 +112,11 @@ class BF_PMTable_DataSource {
      */
     public static function get_data() {
         $pmtable_json = BF_Plugin::get_cache_dir( 'pmtable.json' );
+        if( ! file_exists( $pmtable_json ) || ! is_readable( $pmtable_json ) ) {
+            if( ! self::create_default_data() ) {
+                return [];
+            }
+        }
 
         $json_str = file_get_contents( $pmtable_json );
         if( $json_str === false ) {
