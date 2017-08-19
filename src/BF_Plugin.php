@@ -449,7 +449,7 @@ class BF_Plugin {
             'id'       => BF_SLUG . '-help',
             'title'    => __( 'Sportovní feedy', BF_SLUG ),
             'content'  => $help_tab,
-		] );
+        ] );
     }
 
     /**
@@ -473,7 +473,7 @@ class BF_Plugin {
             'id'       => BF_SLUG . '-widget_help',
             'title'    => __( 'Sportovní feedy', BF_SLUG ),
             'content'  => $help_tab,
-		] );
+        ] );
     }
 }
 
