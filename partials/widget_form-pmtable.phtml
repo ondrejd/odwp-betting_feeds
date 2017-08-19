@@ -12,6 +12,19 @@ if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Normalize instance data
+$description = ! empty( $instance['description'] ) ? $instance['description'] : __( 'Premier League 2017/2018', BF_SLUG );
+$league      = ! empty( $instance['league'] ) ? $instance['league'] : 'pm2018';
+$show_col1   = array_key_exists( 'show_col1', $instance );
+$show_col2   = true;
+$show_col3   = array_key_exists( 'show_col3', $instance );
+$show_col4   = array_key_exists( 'show_col4', $instance );
+$show_col5   = array_key_exists( 'show_col5', $instance );
+$show_col6   = array_key_exists( 'show_col6', $instance );
+$show_col7   = array_key_exists( 'show_col7', $instance );
+$show_col8   = array_key_exists( 'show_col8', $instance );
+$show_col9   = array_key_exists( 'show_col9', $instance );
+
 ?>
 <div class="odwpbf-pmtable-widget--form">
     <p>

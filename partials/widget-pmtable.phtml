@@ -16,7 +16,6 @@ if( ! class_exists( 'BF_PMTable_DataSource' ) ) {
     include_once( BF_PATH . 'src/BF_PMTable_DataSource.php' );
 }
 
-
 echo $args['before_widget'];
 ?>
 <div class="odwpbf-pmtable-widget">
@@ -25,17 +24,31 @@ echo $args['before_widget'];
     endif; ?>
     <div class="odwpbf-pmtable">
         <div class="odwpbf-pmtable--row odwpbf-pmtable--head">
+            <?php if( array_key_exists( 'show_col1', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col1">P</span>
+            <?php endif ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col2">Tým</span>
+            <?php if( array_key_exists( 'show_col3', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col3">Z</span>
-            <!-- celkem [ -->
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col4', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col4">V</span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col5', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col5">R</span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col6', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col6">P</span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col7', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col7">G+</span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col8', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col8">G-</span>
-            <!-- ] -->
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col9', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col9">B</span>
+            <?php endif ?>
         </div>
         <?php 
         $pmtable_data = BF_PMTable_DataSource::get_data();
@@ -44,15 +57,31 @@ echo $args['before_widget'];
             foreach( $pmtable_data as $data ) :
 
         ?><div class="odwpbf-pmtable--row">
+            <?php if( array_key_exists( 'show_col1', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col1"><?php echo $data['poradi'] ?></span>
+            <?php endif ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col2"><?php echo $data['tym'] ?></span>
+            <?php if( array_key_exists( 'show_col3', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col3"><?php echo $data['zapasy'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col4', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col4"><?php echo $data['vyhry'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col5', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col5"><?php echo $data['remizy'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col6', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col6"><?php echo $data['prohry'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col7', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col7"><?php echo $data['goly_v'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col8', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col8"><?php echo $data['goly_o'] ?></span>
+            <?php endif ?>
+            <?php if( array_key_exists( 'show_col9', $instance ) ) : ?>
             <span class="odwpbf-pmtable--col odwpbf-pmtable--col9"><?php echo $data['body'] ?></span>
+            <?php endif ?>
         </div>
         <?php
             endforeach;
