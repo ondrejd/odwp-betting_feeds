@@ -2,6 +2,10 @@
 
 Jednoduchý plugin pro [WordPress][1], který zobrazuje XML feedy ze sázkových kanceláří ve formě [shortcode][2] a [widgetů][3].
 
+## Vlastnosti pluginu
+
+- obsahuje widget s [výsledkovou tabulkou][5] __Premier League__
+
 ## Úkoly
 
 - [ ] stránka s nastavením pluginu
