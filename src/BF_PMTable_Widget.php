@@ -75,7 +75,7 @@ class BF_PMTable_Widget extends WP_Widget {
         echo ob_get_flush();
         //return 'noform';
     }
- 
+
     /**
      * Updates a particular instance of a widget.
      * @param array $new_instance Settings for the new widget's instance.
@@ -85,12 +85,6 @@ class BF_PMTable_Widget extends WP_Widget {
      * @since 1.0.0
      */
     public function update( $new_instance, $old_instance ) {
-/*
-        $instance = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-
-		return $instance;
-*/
         return $new_instance;
     }
 }

@@ -1,0 +1,34 @@
+<?php
+/**
+ * @author Ondřej Doněk <ondrejd@gmail.com>
+ * @link https://github.com/ondrejd/odwp-betting_feeds for the canonical source repository
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-betting_fields
+ * @see BF_PMCurrentRound_Widget::widget()
+ * @since 1.0.0
+ */
+
+if( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+if( ! class_exists( 'BF_PMCurrentRound_DataSource' ) ) {
+    include_once( BF_PATH . 'src/BF_PMCurrentRound_DataSource.php' );
+}
+
+echo $args['before_widget'];
+?>
+<div class="odwpbf-pmcurrent_round-widget">
+    <?php if( ! empty( $instance['description'] ) ) : 
+        echo $args['before_title'] . apply_filters( 'widget_title', $instance['description'] ) . $args['after_title'];
+    endif; ?>
+    <div class="odwpbf-pmcurrent_round">
+        <pre><?php
+$pmcurrent_round = BF_PMCurrentRound_DataSource::get_data();
+var_dump( $pmcurrent_round );
+        ?></pre>
+        <!-- ... -->
+    </div>
+</div>
+<?php
+echo $args['after_widget'];

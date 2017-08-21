@@ -19,8 +19,8 @@ if( ! class_exists( 'BF_PMTable_DataSource' ) ) {
 echo $args['before_widget'];
 ?>
 <div class="odwpbf-pmtable-widget">
-    <?php if( ! empty( $instance['title'] ) ) : 
-        echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+    <?php if( ! empty( $instance['description'] ) ) : 
+        echo $args['before_title'] . apply_filters( 'widget_title', $instance['description'] ) . $args['after_title'];
     endif; ?>
     <div class="odwpbf-pmtable">
         <div class="odwpbf-pmtable--row odwpbf-pmtable--head">
@@ -95,4 +95,3 @@ echo $args['before_widget'];
 </div>
 <?php
 echo $args['after_widget'];
-?>

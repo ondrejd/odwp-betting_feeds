@@ -33,8 +33,15 @@ class BF_PMCurrentRound_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(
             BF_SLUG . '-pmcurround_widget',
-            __( 'Aktuální kolo PM', BF_SLUG ),
-            [],
+            __( 'Aktuální kolo PM', BF_SLUG ), [
+                'description' => __( 'PM - Aktuální kolo', BF_SLUG ),
+                'show_season_filter' => false,
+                'show_round_filter' => false,
+                'show_title' => true,
+                'show_icon' => true,
+                'show_date' => true,
+                'show_result' => false,
+            ],
             []
         );
     }
@@ -48,10 +55,24 @@ class BF_PMCurrentRound_Widget extends WP_Widget {
      */
     public function widget( $args, $instance ) {
         ob_start( function() {} );
-        include( BF_PATH . 'partials/widget-current_round.phtml' );
+        include( BF_PATH . 'partials/widget-pmcurrent_round.phtml' );
         echo ob_get_flush();
     }
- 
+
+    /**
+     * Outputs the settings update form.
+     * @param array $instance Current settings.
+     * @return string Default return is 'noform'.
+     * @since 1.0.0
+     */
+    public function form( $instance ) {
+        $self = $this;
+        ob_start( function() {} );
+        include( BF_PATH . 'partials/widget_form-pmcurrent_round.phtml' );
+        echo ob_get_flush();
+        //return 'noform';
+    }
+
     /**
      * Updates a particular instance of a widget.
      * @param array $new_instance Settings for the new widget's instance.
@@ -62,19 +83,6 @@ class BF_PMCurrentRound_Widget extends WP_Widget {
      */
     public function update( $new_instance, $old_instance ) {
         return $new_instance;
-    }
- 
-    /**
-     * Outputs the settings update form.
-     * @param array $instance Current settings.
-     * @return string Default return is 'noform'.
-     * @since 1.0.0
-     */
-    public function form( $instance ) {
-        ob_start( function() {} );
-        include( BF_PATH . 'partials/widget_form-current_round.phtml' );
-        echo ob_get_flush();
-        return 'noform';
     }
 }
 

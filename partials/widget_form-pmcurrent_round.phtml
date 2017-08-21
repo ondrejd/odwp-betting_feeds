@@ -1,0 +1,87 @@
+<?php
+/**
+ * @author Ondřej Doněk <ondrejd@gmail.com>
+ * @link https://github.com/ondrejd/odwp-betting_feeds for the canonical source repository
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License 3.0
+ * @package odwp-betting_fields
+ * @see BF_PMCurrentRound_Widget::form()
+ * @since 1.0.0
+ */
+
+if( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+// Normalize instance data
+$description   = ! empty( $instance['description'] ) ? $instance['description'] : __( 'PM - Aktuální kolo', BF_SLUG );
+$show_s_filter = array_key_exists( 'show_season_filter', $instance );
+$show_r_filter = array_key_exists( 'show_round_filter', $instance );
+$show_title    = array_key_exists( 'show_title', $instance );
+$show_icon     = array_key_exists( 'show_icon', $instance );
+$show_date     = array_key_exists( 'show_date', $instance );
+$show_result   = array_key_exists( 'show_result', $instance );
+
+?>
+<div class="odwpbf-pmtable-widget--form">
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'description' ) ) ?>"><?php esc_attr_e( 'Název widgetu:', BF_SLUG ) ?></label> 
+        <input class="widefat" id="<?php echo esc_attr( $self->get_field_id( 'description' ) ); ?>" name="<?php echo esc_attr( $self->get_field_name( 'description' ) ); ?>" type="text" value="<?php echo esc_attr( $description ); ?>">
+    </p>
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_season_filter' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_season_filter' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_season_filter' ) ) ?>" <?php checked( $show_s_filter ) ?>>
+            <?php _e( 'Zobrazit výběr sezóny?', BF_SLUG ) ?>
+        </label>
+    </p>
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_round_filter' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_round_filter' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_round_filter' ) ) ?>" <?php checked( $show_r_filter ) ?>>
+            <?php _e( 'Zobrazit výběr kola?', BF_SLUG ) ?>
+        </label>
+    </p>
+
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_title' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_title' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_title' ) ) ?>" <?php checked( $show_title ) ?>>
+            <?php _e( 'Zobrazit názvy klubů?', BF_SLUG ) ?>
+        </label>
+    </p>
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_icon' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_icon' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_icon' ) ) ?>" <?php checked( $show_icon ) ?>>
+            <?php _e( 'Zobrazit loga klubů?', BF_SLUG ) ?>
+        </label>
+    </p>
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_date' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_date' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_date' ) ) ?>" <?php checked( $show_date ) ?>>
+            <?php _e( 'Zobrazit datum a čas konání zápasu?', BF_SLUG ) ?>
+        </label>
+    </p>
+    <p>
+        <label for="<?php echo esc_attr( $self->get_field_id( 'show_date' ) ) ?>">
+            <input type="checkbox" id="<?php echo esc_attr( $self->get_field_id( 'show_result' ) ) ?>" name="<?php echo esc_attr( $self->get_field_name( 'show_result' ) ) ?>" <?php checked( $show_result ) ?>>
+            <?php _e( 'Zobrazit výsledek zápasu?', BF_SLUG ) ?>
+        </label>
+    </p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
